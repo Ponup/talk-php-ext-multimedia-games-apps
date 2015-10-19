@@ -28,12 +28,189 @@
 	<div class="deck-container">
 
 	<section class="slide">
-		<h2>PHP extensions for multimedia games and apps</h1>
-		<h3>by Santiago Lizardo<h3>
+		<h2>Reasons why one should write PHP extensions</h2>
 
-		<h4>(1) <a href="1-php_extension_c.html">PHP extension development in C</a></h4>
-		<h4>(2) <a href="2-interative_php_apps_sdl.html">Interactive apps with PHP SDL</a></h4>
-		<h4>(3) <a href="3-3d_worlds_php_opengl.html">3D worlds with PHP OpenGL</a></h4>
+		<ul>
+			<li>To be a better PHP programmer</li>
+			<li>To port a library to PHP world</li>
+			<li>To make an algorithm more efficient</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Exposing C libraries in PHP</h2>
+
+		<strong>Mimicking the C API</strong> or <strong>create a new one</strong>
+	</section>
+
+	<section class="slide">
+		<img src="images/path-to-core-development.jpg" />
+	</section>
+
+	<section class="slide">
+		<h2>C programming language</h2>
+
+		<ul>
+			<li>PHP syntax is similar to C</li>
+		</ul>
+
+		<a href="http://lxr.php.net">lxr.php.net</a>
+		<a href="http://c.learncodethehardway.org/book/">Learn to code C the hard way</a>
+	</section>
+
+	<section class="slide">
+		<h2>Environment requirements</h2>
+
+		<ul>
+			<li>C compiler</li>
+			<li>PHP source code</li>
+			<li>PHP dependencies</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Unix Build systems</h2>
+
+		<dl>
+			<dd>autoconf</dd><dt>.</dt>
+			<dd>automake</dd><dt>.</dt>
+			<dd>libtool</dd><dt>.</dt>
+		</dl>
+	</section>
+
+	<section class="slide">
+		<h2>PHPize command</h2>
+
+		<pre>
+		phpize
+		./configure
+		make
+		make test
+		sudo make install
+		</pre>
+	</section>
+
+	<section class="slide">
+		<h2>Common practices</h2>
+
+		<ul>
+			<li>Keep multiple PHP versions in different directories</li>
+			<li>Enable debug (--enable-debug) and maintainer (--enable-maintainer-zts) modes</li>
+			<li>Valgrind and gdb</li>
+			<li>Coding standards: http://lxr.php.net/xref/PHP_5_6/CODING_STANDARDS</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Virtual machines</h2>
+
+		<a href="https://github.com/rlerdorf/php7dev">Rasmus</a>
+		<ul>
+			<li>VirtualBox</li>
+			<li>Vagrant</li>
+			<li>vagrant up, vagrant ssh, newphp 56 debug zts</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Extension lifecycle</h2>
+
+		MINIT
+		RINIT
+		RSHUTDOWN
+		MSHUTDOWN
+	</section>
+
+	<section class="slide">
+		<h2>ZVAL</h2>
+
+		<img src="images/zval-structure.jpg" />
+	</section>
+
+	<section class="slide">
+		<h2>Storing types</h2>
+
+		<img src="images/type-mapping.jpg" />
+	</section>
+
+	<section class="slide">	
+		<h2>ZVAL to C</h2>
+
+		<img src="images/zval-to-c.jpg" />
+	</section>
+
+	<section class="slide">
+		<h2>Functions</h2>
+
+		1. Define your C function
+		2. Create a PHP function
+			1. Include it in your extension
+			2. Expose how it uses arguments
+		3. Parse parameters
+		4. Execute C function
+		5. Return data to PHP land
+	</section>
+
+	<section class="slide">
+		<h2>Parameter formatting</h2>
+
+		<img src="images/parameters-formatting.png" />
+	</section>
+
+	<section class="slide">
+		<h2>"Advanced" type specifiers</h2>
+
+		<img src="images/advanced-type-specifiers.png" />
+	</section>
+
+	<section class="slide">
+		<h2>Returning values</h2>
+
+		<img src="images/returning-values.png" />
+	</section>
+
+	<section class="slide">
+		<h2>Running tests against your extension</h2>
+
+		http://qa.php.net/write-test.php
+		http://qa.php.net/phpt_details.php
+	</section>
+
+	<section class="slide">
+		<h2>Verify extension is enabled</h2>
+
+		<pre>
+		php -m
+		php -d extension=foobar.so -m
+		</pre>
+	</section>
+
+	<section class="slide">
+		<h2>Document and publish</h2>
+
+		http://doc.php.net/phd.php
+		https://edit.php.net/
+		http://svn.php.net/viewvc/phpdoc/en/trunk/reference/
+	</section>
+
+	<section class="slide">
+		<h2>How to become a contributor</h2>
+
+		1. Email pecl-dev@lists.php.net
+			Who you are
+			What you wrote
+			Why do you think it should be part of PECL
+	</section>
+
+	<section class="slide">
+		<h2>PECL</h2>
+	</section>
+
+	<section class="slide">
+		<h2>References</h2>
+
+		http://php.net/manual/en/internals2.php
+		http://www.phpinternalsbook.com/
 	</section>
 
 	<div aria-role="navigation">
