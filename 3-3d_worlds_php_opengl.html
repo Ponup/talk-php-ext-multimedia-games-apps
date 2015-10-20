@@ -28,12 +28,117 @@
 	<div class="deck-container">
 
 	<section class="slide">
-		<h2>PHP extensions for multimedia games and apps</h1>
-		<h3>by Santiago Lizardo<h3>
+		<h1>3D worlds with PHP and OpenGL</h1>
+	</section>
 
-		<h4>(1) <a href="1-php_extension_c.html">PHP extension development in C</a></h4>
-		<h4>(2) <a href="2-interative_php_apps_sdl.html">Interactive apps with PHP SDL</a></h4>
-		<h4>(3) <a href="3-3d_worlds_php_opengl.html">3D worlds with PHP OpenGL</a></h4>
+	<section class="slide">
+	<h3>2 extensions in 1</h3>
+	GLUT + GL
+	</section>
+
+	<section class="slide">
+		<h2>OpenGL</h2>
+	</section>
+
+	<section class="slide">
+		<h2>GLUT</h2>
+
+		<p>System independent toolkit to hide the complexity of different windows system APIs</p>
+
+		<ul>
+			<li>Initializing and creating window</li>
+			<li>Handling window and input events</li>
+			<li>Drawing basic 3D objects</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<pre><code>
+  7 $displayCallback = function() {
+  8         glClearColor(0, 0, 0, 0);       
+  9         glClear(GL_COLOR_BUFFER_BIT);   
+ 10         glColor3f(1, 1, 1);
+ 11         glutSolidTeapot(1);
+ 12         glFlush();         
+ 13 };
+ 14 
+ 15 $reshapeCallback = function($w, $h) {
+ 16         glViewport(0, 0, $w, $h);       
+ 17         glMatrixMode(GL_PROJECTION);    
+ 18         glLoadIdentity();  
+ 19         glFrustum(-.5, .5, -.5, .5, 1, 20);
+ 20         glMatrixMode(GL_MODELVIEW);     
+ 21         glLoadIdentity();  
+ 22         gluLookAt(0, 0, 5, 0, 0, 0, 0, 1, 0);
+ 23 };
+ 24 
+ 25 glutInit($argc, $argv);
+ 26 glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+ 27 glutCreateWindow('Simple model');
+ 28 glutDisplayFunc($displayCallback);
+ 29 glutReshapeFunc($reshapeCallback);
+ 30 glutMainLoop();
+
+</code></pre>	
+	</section>
+
+	<section class="slide">
+		<h2>GLUT functions</h2>
+		glutInit(argc, argv)
+		glutInitDisplayMode
+		GLUT_RGB, GLUT_RGBA, GLUT_INDEX
+		GLUT_SINGLE, GLUT_DOUBLE
+		GLUT_DEPTH, GLUT_STENCIL, GLUT_ACCUM
+	</section>
+
+	<section class="slide">
+		<h2>GLUT functions</h2>
+		glutInitWindowSize(w, h)
+		glutInitWindowPosition(x, y)
+		glutCreateWindow(name)
+	</section>
+
+	<section class="slide">
+		glutDisplayFunc(callback())
+		Called whenever the contents of the windows need to be redrawn
+		Use glutPostRedisplay to manually ask GLUT to recall this display fx
+	</section>
+
+	<section class="slide">
+		glutReshapeFunc(callback(w, h));
+		Called when the window is resized or moved
+		Call glViewport here to adjust your viewport
+	</section>
+
+	<section class="slide">
+		glutKeyboardFunc(callback(k, x, y))
+		Sets the keyboard callback for the current window
+		glutIdleFunc(callback())
+	</section>
+
+	<section class="slide">
+		glutMouseFunc(callback(button, state, x, y))
+		glutMotionFunc(callback(x, y))
+	</section>
+
+	<section class="slide">
+		glutMainLoop()
+		Enter the GLUT processing loop and never return
+		glutPostRedisplay()
+		Marks the current windows as needing to be redisplayed
+	</section>
+
+	<section class="slide">
+		GLUT provides the follow objects:
+		Sphere, cube, torus, teapot, cone and others...
+		Wireframe and solid
+		glutSolidSphere(1, 24, 24)
+		glutWireCube(1)
+	</section>
+
+	<section class="slide">
+		<h3>End of section</h3>
+		<p><a href="index.html">Back to index</a></p>
 	</section>
 
 	<div aria-role="navigation">
