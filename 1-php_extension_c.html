@@ -31,19 +31,119 @@
 		<h2>Reasons why one should write PHP extensions</h2>
 
 		<ul>
-			<li>To be a better PHP programmer</li>
 			<li>To port a library to PHP world</li>
 			<li>To make an algorithm more efficient</li>
+			<li>To extend the PHP language</li>
+			<li>To be a better PHP programmer</li>
+			<li>To protect the code</li>
 		</ul>
 	</section>
 
 	<section class="slide">
 		<h2>Exposing C libraries in PHP</h2>
 
-		<strong>Mimicking the C API</strong> or <strong>create a new one</strong>
+		<ul>
+			<li>Mimicking the C API</li>
+			<li>Creating a new one</li>
+		</ul>
 	</section>
 
 	<section class="slide">
+		<pre><code>
+
+glutInit($argc, $argv);
+glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+glutInitWindowPosition(0, 0);
+glutInitWindowSize(800, 600);
+glutCreateWindow('Simple model');
+glutDisplayFunc($displayCallback);
+glutReshapeFunc($reshapeCallback);
+glutMainLoop();
+		</code></pre>
+	</section>
+
+	<section class="slide">
+		<pre><code>
+        $ch = curl_init("www.example.com/curl.php?option=test");
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);      
+        curl_close($ch);
+		</code></pre>
+	</section>
+
+	<section class="slide">
+		<pre><code>
+$request = new http\Client\Request("GET",
+    "http://localhost",
+    ["User-Agent"=>"My Client/0.1"]
+);
+$request->setOptions(["timeout"=>1]);
+
+$client = new http\Client;
+$client->enqueue($request)->send();
+
+// pop the last retrieved response
+$response = $client->getResponse();
+printf("%s returned '%s' (%d)\n",
+    $response->getTransferInfo("effective_url"),
+    $response->getInfo(),
+    $response->getResponseCode()
+);
+		</code></pre>
+	</section>
+
+	<section class="slide">
+		<h2>Extensions</h2>
+
+		<ul>
+			<li>Standard</li>
+			<li>Database ... </li>
+			<li><abbr title="PHP Extension Community Library">PECL</abbr></li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>PHP in pieces</h2>
+		
+		<ul>
+			<li>ZEND Engine: parsing, memory, ...</li>
+			<li>PHP core: communication, <abbr title="Server Application Programming Interface">SAPI</a></li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Extension lifecycle</h2>
+
+		SAPI<br >
+			- MINIT<br />
+			--- RINIT<br />
+			----- ZE parses (tokens, opcodes)<br />
+			--- RSHUTDOWN<br />
+			- MSHUTDOWN<br />
+	</section>
+
+
+<h2>Global variables</h2>
+<abbr title="Thread Safe Resource Management">TSRM </abbr>
+
+	<section class="slide">
+		<h2>Memory allocation</h2>
+
+		<ul>
+			<li>Persistent</li>
+			<li>Non-persistent</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<img src="images/memory-allocation.png" />
+	</section>
+
+
+	<section class="slide">
+		<h2>How to become a PHP core developer</h2>
 		<img src="images/path-to-core-development.jpg" />
 	</section>
 
@@ -52,10 +152,14 @@
 
 		<ul>
 			<li>PHP syntax is similar to C</li>
+			<li>Tons of documentation available</li>
 		</ul>
 
-		<a href="http://lxr.php.net">lxr.php.net</a>
-		<a href="http://c.learncodethehardway.org/book/">Learn to code C the hard way</a>
+		<ul>
+			<li><a href="http://lxr.php.net" target="_blank">lxr.php.net</a></li>
+			<li><a href="http://www.phpinternalsbook.com/">http://www.phpinternalsbook.com/</a></li>
+			<li><a href="http://c.learncodethehardway.org/book/">Learn to code C the hard way</a></li>
+		</ul>
 	</section>
 
 	<section class="slide">
@@ -95,11 +199,117 @@
 
 		<ul>
 			<li>Keep multiple PHP versions in different directories</li>
-			<li>Enable debug (--enable-debug) and maintainer (--enable-maintainer-zts) modes</li>
-			<li>Valgrind and gdb</li>
+			<li>Valgrind</li>
 			<li>Coding standards: http://lxr.php.net/xref/PHP_5_6/CODING_STANDARDS</li>
 		</ul>
 	</section>
+
+	<section class="slide">
+		<h2>Debugging</h2>
+
+		<ul>
+			<li>Configure with --enable-debug</li>
+			<li>Run with a debugger (gdb, lldb)</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Multithreading</h2>
+
+		<ul>
+			<li>Configure with --enable-maintainer-zts</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+<h2>Hello world in PHP</h2>
+<pre><code>
+function hello_world() {
+    return 'Hello World';
+}
+</code></pre>
+	</section>
+
+<h2>config.m4</h2>
+PHP_ARG_ENABLE(hello, whether to enable Hello
+World support,
+[ --enable-hello   Enable Hello World support])
+if test "$PHP_HELLO" = "yes"; then
+  AC_DEFINE(HAVE_HELLO, 1, [Whether you have Hello World])
+  PHP_NEW_EXTENSION(hello, hello.c, $ext_shared)
+fi
+
+<h2>php_hello.h</h2>
+
+
+#ifndef PHP_HELLO_H
+#define PHP_HELLO_H 1
+#define PHP_HELLO_WORLD_VERSION "1.0"
+#define PHP_HELLO_WORLD_EXTNAME "hello"
+
+PHP_FUNCTION(hello_world);
+
+extern zend_module_entry hello_module_entry;
+#define phpext_hello_ptr &hello_module_entry
+
+#endif
+
+<h2>php_hello.c</h2>
+
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+#include "php.h"
+#include "php_hello.h"
+
+static function_entry hello_functions[] = {
+    PHP_FE(hello_world, NULL)
+    {NULL, NULL, NULL}
+};
+
+zend_module_entry hello_module_entry = {
+#if ZEND_MODULE_API_NO >= 20010901
+    STANDARD_MODULE_HEADER,
+#endif
+    PHP_HELLO_WORLD_EXTNAME,
+    hello_functions,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+#if ZEND_MODULE_API_NO >= 20010901
+    PHP_HELLO_WORLD_VERSION,
+#endif
+    STANDARD_MODULE_PROPERTIES
+};
+
+#ifdef COMPILE_DL_HELLO
+ZEND_GET_MODULE(hello)
+#endif
+
+PHP_FUNCTION(hello_world)
+{
+    RETURN_STRING("Hello World", 1);
+}
+
+<h2>Another version</h2>
+
+
+PHP_FUNCTION(hello_world)
+{
+    char *str;
+    str = estrdup("Hello World");
+    RETURN_STRING(str, 0);
+}
+
+<h2>Building the extension</h2>
+$ phpize
+$ ./configure --enable-hello
+$ make
+
+
 
 	<section class="slide">
 		<h2>Virtual machines</h2>
@@ -108,23 +318,42 @@
 		<ul>
 			<li>VirtualBox</li>
 			<li>Vagrant</li>
-			<li>vagrant up, vagrant ssh, newphp 56 debug zts</li>
 		</ul>
-	</section>
 
-	<section class="slide">
-		<h2>Extension lifecycle</h2>
-
-		MINIT
-		RINIT
-		RSHUTDOWN
-		MSHUTDOWN
+		<pre><code>
+			vagrant up
+			vagrant ssh
+			newphp 56 debug zts
+		</code></pre>
 	</section>
 
 	<section class="slide">
 		<h2>ZVAL</h2>
 
 		<img src="images/zval-structure.jpg" />
+<pre><code>
+typedef struct _zval_struct {
+    zvalue_value value;
+    zend_uint refcount__gc;
+    zend_uchar type;
+    zend_uchar is_ref__gc;
+} zval;
+</code></pre>
+	</section>
+
+	<section class="slide">
+<pre><code>
+typedef union _zvalue_value {
+    long lval;
+    double dval;
+    struct {
+        char *val;
+        int len;
+    } str;
+    HashTable *ht;
+    zend_object_value obj;
+} zvalue_value;
+</code></pre>
 	</section>
 
 	<section class="slide">
@@ -142,23 +371,25 @@
 	<section class="slide">
 		<h2>Functions</h2>
 
-		1. Define your C function
-		2. Create a PHP function
+		<ol>
+	<li>Define your C function</li>
+		<li>Create a PHP function</li>
 			1. Include it in your extension
 			2. Expose how it uses arguments
-		3. Parse parameters
-		4. Execute C function
-		5. Return data to PHP land
+		<li>Parse parameters</li>
+	<li>Execute C function</li>
+	<li>Return data to PHP land</li>
+		</ol>
 	</section>
 
 	<section class="slide">
-		<h2>Parameter formatting</h2>
+		<h2>Function args: Type specifiers</h2>
 
 		<img src="images/parameters-formatting.png" />
 	</section>
 
 	<section class="slide">
-		<h2>"Advanced" type specifiers</h2>
+		<h2>Function args: "Advanced" type specifiers</h2>
 
 		<img src="images/advanced-type-specifiers.png" />
 	</section>
@@ -166,21 +397,22 @@
 	<section class="slide">
 		<h2>Returning values</h2>
 
-		<img src="images/returning-values.png" />
+		<img src="images/returning-values.jpg" />
 	</section>
 
 	<section class="slide">
 		<h2>Running tests against your extension</h2>
 
-		http://qa.php.net/write-test.php
-		http://qa.php.net/phpt_details.php
+		<ul>
+			<li>http://qa.php.net/write-test.php</li>
+			<li>http://qa.php.net/phpt_details.php</li>
+		</ul>
 	</section>
 
 	<section class="slide">
 		<h2>Verify extension is enabled</h2>
 
 		<pre>
-		php -m
 		php -d extension=foobar.so -m
 		</pre>
 	</section>
@@ -188,18 +420,20 @@
 	<section class="slide">
 		<h2>Document and publish</h2>
 
-		http://doc.php.net/phd.php
-		https://edit.php.net/
+		http://doc.php.net/phd.php<br />
+		https://edit.php.net/<br />
 		http://svn.php.net/viewvc/phpdoc/en/trunk/reference/
 	</section>
 
 	<section class="slide">
 		<h2>How to become a contributor</h2>
 
-		1. Email pecl-dev@lists.php.net
-			Who you are
-			What you wrote
-			Why do you think it should be part of PECL
+		<ol>
+			<li>Email pecl-dev@lists.php.net</li>
+			<li>Who you are</li>
+			<li>What you wrote</li>
+			<li>Why do you think it should be part of PECL</li>
+		</ol>
 	</section>
 
 	<section class="slide">
@@ -209,7 +443,7 @@
 	<section class="slide">
 		<h2>References</h2>
 
-		http://php.net/manual/en/internals2.php
+		http://php.net/manual/en/internals2.php<br />
 		http://www.phpinternalsbook.com/
 	</section>
 
