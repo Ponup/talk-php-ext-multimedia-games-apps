@@ -28,29 +28,31 @@
 	<div class="deck-container">
 
 	<section class="slide">
-		<h2>Reasons why one should write PHP extensions</h2>
+		<h2>Reasons to write a PHP extension</h2>
 
 		<ul>
-			<li>To port a library to PHP world</li>
-			<li>To make an algorithm more efficient</li>
-			<li>To extend the PHP language</li>
+			<li>Expose a C library in the PHP space</li>
+			<li>Make an algorithm more efficient</li>
+			<li>Protect the code</li>
+			<li>Extend the PHP language</li>
 			<li>To be a better PHP programmer</li>
-			<li>To protect the code</li>
 		</ul>
 	</section>
 
 	<section class="slide">
 		<h2>Exposing C libraries in PHP</h2>
-
+		<h3>Two approaches</h3>
 		<ul>
-			<li>Mimicking the C API</li>
-			<li>Creating a new one</li>
+			<li>Mimic a C library API</li>
+			<li>Create a a new API</li>
 		</ul>
 	</section>
 
 	<section class="slide">
-		<pre><code>
+		<h2>Exposing C libraries in PHP</h2>
+		<h3>GLUT example</h3>
 
+		<pre><code>
 glutInit($argc, $argv);
 glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
 glutInitWindowPosition(0, 0);
@@ -63,6 +65,9 @@ glutMainLoop();
 	</section>
 
 	<section class="slide">
+		<h2>Exposing C libraries in PHP</h2>
+		<h3>CURL example</h3>
+
 		<pre><code>
         $ch = curl_init("www.example.com/curl.php?option=test");
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -74,6 +79,9 @@ glutMainLoop();
 	</section>
 
 	<section class="slide">
+		<h2>Exposing C libraries in PHP</h2>
+		<h3>PECL HTTP</h3>
+
 		<pre><code>
 $request = new http\Client\Request("GET",
     "http://localhost",
@@ -95,42 +103,70 @@ printf("%s returned '%s' (%d)\n",
 	</section>
 
 	<section class="slide">
-		<h2>Extensions</h2>
+		<h2>Extension by distribution</h2>
+
+		<h3>Hundreds available: core, bundled, bundled with deps, external (PECL)</h3>
 
 		<ul>
-			<li>Standard</li>
-			<li>Database ... </li>
+			<li>Standard: arrays, math, filesystem, strings, ...</li>
+			<li>Database drivers</li>
+			<li>XML manipulation</li>
+			<li>ZIP</li>
 			<li><abbr title="PHP Extension Community Library">PECL</abbr></li>
 		</ul>
 	</section>
 
 	<section class="slide">
-		<h2>PHP in pieces</h2>
+		<h2>Extension by relationship to the language</h2>
+
+		<ul>
+			<li>Zend extension</li>
+			<li>PHP extension</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>PHP language decomposition</h2>
 		
 		<ul>
 			<li>ZEND Engine: parsing, memory, ...</li>
 			<li>PHP core: communication, <abbr title="Server Application Programming Interface">SAPI</a></li>
 		</ul>
+
+		<img src="images/zend-engine.png" />
+	</section>
+
+	<section class="slide">
+		<h2>How to become a PHP core developer</h2>
+		<img src="images/path-to-core-development.jpg" />
 	</section>
 
 	<section class="slide">
 		<h2>Extension lifecycle</h2>
+		<h3>Apache SAPI</h3>
 
-		SAPI<br >
-			- MINIT<br />
-			--- RINIT<br />
-			----- ZE parses (tokens, opcodes)<br />
-			--- RSHUTDOWN<br />
-			- MSHUTDOWN<br />
+		<img src="images/php-lifecycle-apache.jpg" />
 	</section>
 
+	<section class="slide">
+		<h2>Extension lifecycle</h2>
+		<h3>CLI SAPI</h3>
 
-<h2>Global variables</h2>
-<abbr title="Thread Safe Resource Management">TSRM </abbr>
- ZTS (Zend Thread Safety):
+		<img src="images/php-lifecycle-cli.jpg" />
+	</section>
+
+	<section class="slide">
+		<h2>Global variables</h2>
+		
+		<ul>
+			<li><abbr title="Thread Safe Resource Management">TSRM </abbr></li>
+			<li>Also known as: ZTS (Zend Thread Safety)</li>
+		</ul>
+	</section>
 
 	<section class="slide">
 		<h2>Memory allocation</h2>
+		<h3>Type</h3>
 
 		<ul>
 			<li>Persistent</li>
@@ -139,38 +175,26 @@ printf("%s returned '%s' (%d)\n",
 	</section>
 
 	<section class="slide">
+		<h2>Memory allocation</h2>
+		<h3>Functions</h3>
+
 		<img src="images/memory-allocation.png" />
-	</section>
-
-
-	<section class="slide">
-		<h2>How to become a PHP core developer</h2>
-		<img src="images/path-to-core-development.jpg" />
-	</section>
-
-	<section class="slide">
-		<h2>C programming language</h2>
-
-		<ul>
-			<li>PHP syntax is similar to C</li>
-			<li>Tons of documentation available</li>
-		</ul>
-
-		<ul>
-			<li><a href="http://lxr.php.net" target="_blank">lxr.php.net</a></li>
-			<li><a href="http://www.phpinternalsbook.com/">http://www.phpinternalsbook.com/</a></li>
-			<li><a href="http://c.learncodethehardway.org/book/">Learn to code C the hard way</a></li>
-		</ul>
 	</section>
 
 	<section class="slide">
 		<h2>Environment requirements</h2>
 
 		<ul>
-			<li>C compiler</li>
+			<li>C compiler (and knowledge)</li>
 			<li>PHP source code</li>
 			<li>PHP dependencies</li>
 		</ul>
+
+		<ul>
+			<li><a href="http://lxr.php.net" target="_blank">lxr.php.net</a></li>
+			<li><a href="http://c.learncodethehardway.org/book/">Learn to code C the hard way</a></li>
+		</ul>
+
 	</section>
 
 	<section class="slide">
@@ -184,45 +208,6 @@ printf("%s returned '%s' (%d)\n",
 	</section>
 
 	<section class="slide">
-		<h2>PHPize command</h2>
-
-		<pre>
-		phpize
-		./configure
-		make
-		make test
-		sudo make install
-		</pre>
-	</section>
-
-	<section class="slide">
-		<h2>Common practices</h2>
-
-		<ul>
-			<li>Keep multiple PHP versions in different directories</li>
-			<li>Valgrind</li>
-			<li>Coding standards: http://lxr.php.net/xref/PHP_5_6/CODING_STANDARDS</li>
-		</ul>
-	</section>
-
-	<section class="slide">
-		<h2>Debugging</h2>
-
-		<ul>
-			<li>Configure with --enable-debug</li>
-			<li>Run with a debugger (gdb, lldb)</li>
-		</ul>
-	</section>
-
-	<section class="slide">
-		<h2>Multithreading</h2>
-
-		<ul>
-			<li>Configure with --enable-maintainer-zts</li>
-		</ul>
-	</section>
-
-	<section class="slide">
 <h2>Hello world in PHP</h2>
 <pre><code>
 function hello_world() {
@@ -231,7 +216,9 @@ function hello_world() {
 </code></pre>
 	</section>
 
+	<section class="slide">
 <h2>config.m4</h2>
+<pre><code>
 PHP_ARG_ENABLE(hello, whether to enable Hello
 World support,
 [ --enable-hello   Enable Hello World support])
@@ -239,10 +226,14 @@ if test "$PHP_HELLO" = "yes"; then
   AC_DEFINE(HAVE_HELLO, 1, [Whether you have Hello World])
   PHP_NEW_EXTENSION(hello, hello.c, $ext_shared)
 fi
+		</code></pre>
+	</section>
 
+	<section class="slide">
 <h2>php_hello.h</h2>
 
 
+<pre><code>
 #ifndef PHP_HELLO_H
 #define PHP_HELLO_H 1
 #define PHP_HELLO_WORLD_VERSION "1.0"
@@ -254,10 +245,14 @@ extern zend_module_entry hello_module_entry;
 #define phpext_hello_ptr &hello_module_entry
 
 #endif
+		</code></pre>
+	</section>
 
+	<section class="slide">
 <h2>php_hello.c</h2>
 
 
+<pre><code>
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -294,23 +289,44 @@ PHP_FUNCTION(hello_world)
 {
     RETURN_STRING("Hello World", 1);
 }
+		</code></pre>
+	</section>
 
+	<section class="slide">
 <h2>Another version</h2>
 
 
+<pre><code>
 PHP_FUNCTION(hello_world)
 {
     char *str;
     str = estrdup("Hello World");
     RETURN_STRING(str, 0);
 }
+		</code></pre>
+</section>
 
-<h2>Building the extension</h2>
-$ phpize
-$ ./configure --enable-hello
-$ make
+	<section class="slide">
+		<h2>PHPize command</h2>
 
+		<pre><code>
+		phpize
+		./configure --enable-hello
+		make
+		make test
+		sudo make install
+		</code></pre>
+	</section>
 
+	<section class="slide">
+		<h2>Common practices</h2>
+
+		<ul>
+			<li>Keep multiple PHP versions in different directories</li>
+			<li>Valgrind</li>
+			<li>Coding standards: http://lxr.php.net/xref/PHP_5_6/CODING_STANDARDS</li>
+		</ul>
+	</section>
 
 	<section class="slide">
 		<h2>Virtual machines</h2>
@@ -329,32 +345,27 @@ $ make
 	</section>
 
 	<section class="slide">
-		<h2>ZVAL</h2>
+		<h2>Debugging</h2>
 
-		<img src="images/zval-structure.jpg" />
-<pre><code>
-typedef struct _zval_struct {
-    zvalue_value value;
-    zend_uint refcount__gc;
-    zend_uchar type;
-    zend_uchar is_ref__gc;
-} zval;
-</code></pre>
+		<ul>
+			<li>Configure with --enable-debug</li>
+			<li>Run with a debugger (gdb, lldb)</li>
+		</ul>
+	</section>
+
+
+	<section class="slide">
+		<h2>Multithreading</h2>
+
+		<ul>
+			<li>Configure with --enable-maintainer-zts</li>
+		</ul>
 	</section>
 
 	<section class="slide">
-<pre><code>
-typedef union _zvalue_value {
-    long lval;
-    double dval;
-    struct {
-        char *val;
-        int len;
-    } str;
-    HashTable *ht;
-    zend_object_value obj;
-} zvalue_value;
-</code></pre>
+		<h2>ZVAL</h2>
+
+		<img src="images/zval.png" />
 	</section>
 
 	<section class="slide">
@@ -384,6 +395,62 @@ typedef union _zvalue_value {
 	</section>
 
 	<section class="slide">
+		<h2>Parsing function arguments</h2>
+<pre><code>
+PHP_FUNCTION(hello_greetme)
+{
+    char *name;
+    int name_len;
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &name, &name_len) == FAILURE) {
+        RETURN_NULL();
+    }
+
+    php_printf("Hello %s", name);
+
+    RETURN_TRUE;
+}
+</code></pre>
+	</section>
+
+	<section class="slide">
+
+<pre><code>
+
+function hello_add($a, $b, $return_long = false) {
+    $sum = (int)$a + (float)$b;
+
+    if ($return_long) {
+        return intval($sum);
+    } else {
+        return floatval($sum);
+    }
+}
+</code></pre>
+	</section>
+
+<section class="slide">
+<pre><code>
+
+
+PHP_FUNCTION(hello_add)
+{
+    long a;
+    double b;
+    zend_bool return_long = 0;
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ld|b", &a, &b, &return_long) == FAILURE) {
+        RETURN_NULL();
+    }
+
+    if (return_long) {
+        RETURN_LONG(a + b);
+    } else {
+        RETURN_DOUBLE(a + b);
+    }
+}
+</code></pre>
+</section>
+	
+	<section class="slide">
 		<h2>Function args: Type specifiers</h2>
 
 		<img src="images/parameters-formatting.png" />
@@ -400,6 +467,31 @@ typedef union _zvalue_value {
 
 		<img src="images/returning-values.jpg" />
 	</section>
+
+	<section class="slide">
+		<h2>Objects</h2>
+
+		<pre><code>
+PHP_FUNCTION(makeObject) {
+    object_init(return_value);
+
+    // add a couple of properties
+    zend_update_property_string(NULL, return_value, "name", strlen("name"), "yig" TSRMLS_CC);
+    zend_update_property_long(NULL, return_value, "worshippers", strlen("worshippers"), 4 TSRMLS_CC);
+}
+		</code></pre>
+	</section>
+
+	<section class="slide">
+		<h2>var_dump(makeObject());</h2>
+object(stdClass)#1 (2) {
+  ["name"]=>
+  string(3) "yig"
+  ["worshippers"]=>
+  int(4)
+  }  
+	</section>
+
 
 	<section class="slide">
 		<h2>Running tests against your extension</h2>
@@ -426,6 +518,8 @@ typedef union _zvalue_value {
 		http://svn.php.net/viewvc/phpdoc/en/trunk/reference/
 	</section>
 
+
+
 	<section class="slide">
 		<h2>How to become a contributor</h2>
 
@@ -438,14 +532,10 @@ typedef union _zvalue_value {
 	</section>
 
 	<section class="slide">
-		<h2>PECL</h2>
-	</section>
-
-	<section class="slide">
 		<h2>References</h2>
 
-		http://php.net/manual/en/internals2.php<br />
-		http://www.phpinternalsbook.com/
+		<a href="http://php.net/manual/en/internals2.php">http://php.net/manual/en/internals2.php</a><br />
+		<a href="http://www.phpinternalsbook.com/">http://www.phpinternalsbook.com/</a>
 	</section>
 
 	<section class="slide">

@@ -32,12 +32,20 @@
 	</section>
 
 	<section class="slide">
-	<h3>2 extensions in 1</h3>
-	GLUT + GL
+		<h2>OpenGL</h2>
+
+		<ul>
+			<li>Cross-language</li>
+			<li>Multi-platform  API</li>
+			<li>Rendering 2D and 3D vector graphics</li>
+			<li>Interact with a GPU, to achieve hardware-accelerated rendering</li>
+		</ul>
 	</section>
 
 	<section class="slide">
-		<h2>OpenGL</h2>
+		<h2>PHP OpenGL</h2>
+
+		<h3>GL + GLUT</h3>
 	</section>
 
 	<section class="slide">
@@ -53,6 +61,8 @@
 	</section>
 
 	<section class="slide">
+		<h3>PHP OpenGL example</h3>
+		
 		<pre><code>
   7 $displayCallback = function() {
   8         glClearColor(0, 0, 0, 0);       
@@ -84,56 +94,93 @@
 
 	<section class="slide">
 		<h2>GLUT functions</h2>
+		<h3>Initialization</h3>	
+
+		<pre>
 		glutInit(argc, argv)
-		glutInitDisplayMode
+		glutInitDisplayMode(mode)
 		GLUT_RGB, GLUT_RGBA, GLUT_INDEX
 		GLUT_SINGLE, GLUT_DOUBLE
 		GLUT_DEPTH, GLUT_STENCIL, GLUT_ACCUM
+		</pre>
 	</section>
 
 	<section class="slide">
 		<h2>GLUT functions</h2>
+		<h3>Windowing</h3>
+
+		<pre>
 		glutInitWindowSize(w, h)
 		glutInitWindowPosition(x, y)
 		glutCreateWindow(name)
+		</pre>
 	</section>
 
 	<section class="slide">
+		<h2>GLUT</h2>
+		<h3>Callbacks</h3>
+		<pre>
 		glutDisplayFunc(callback())
 		Called whenever the contents of the windows need to be redrawn
 		Use glutPostRedisplay to manually ask GLUT to recall this display fx
+		</pre>
 	</section>
 
 	<section class="slide">
+		<h2>GLUT</h2>
+		<h3>Callbacks</h3>
+
+		<pre>
 		glutReshapeFunc(callback(w, h));
 		Called when the window is resized or moved
 		Call glViewport here to adjust your viewport
+		</pre>
 	</section>
 
 	<section class="slide">
+		<h2>GLUT</h2>
+		<h3>Callbacks</h3>
+
+		<pre>
 		glutKeyboardFunc(callback(k, x, y))
 		Sets the keyboard callback for the current window
 		glutIdleFunc(callback())
+		</pre>
 	</section>
 
 	<section class="slide">
+		<h2>GLUT</h2>
+		<h3>Callbacks</h3>
+
+		<pre>
 		glutMouseFunc(callback(button, state, x, y))
 		glutMotionFunc(callback(x, y))
+		</pre>
 	</section>
 
 	<section class="slide">
+		<h2>GLUT</h2>
+		<h3>Main loop</h3>
+
+		<pre>
 		glutMainLoop()
 		Enter the GLUT processing loop and never return
 		glutPostRedisplay()
 		Marks the current windows as needing to be redisplayed
+		</pre>
 	</section>
 
 	<section class="slide">
+		<h2>GLUT</h2>
+		<h3>Objects</h3>
+
+		<pre>
 		GLUT provides the follow objects:
 		Sphere, cube, torus, teapot, cone and others...
 		Wireframe and solid
 		glutSolidSphere(1, 24, 24)
 		glutWireCube(1)
+		</pre>
 	</section>
 
 	<section class="slide">

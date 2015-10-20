@@ -33,62 +33,83 @@
 	</section>
 
 	<section class="slide">
-		Simple
-		DirectMedia
-		Layer
+		<h2><abbr title="Simple DirectMedia Layer">SDL</abbr></h2>
+		
+		<ul>
+			<li class="slide">Simple</li>
+			<li class="slide">DirectMedia</li>
+			<li class="slide">Layer</li>
+		</ul>
 	</section>
 
 	<section class="slide">
-		Written by Sam Lantinga
-		Former lead software engineer at Blizzard
-		Works at Valve
+		<h2>SDL</h2>
+		<h3>History</h3>
+
+		<ul>
+			<li>Written by Sam Lantinga</li>
+			<li>Former lead software engineer at Blizzard</li>
+			<li>Works at Valve</li>
+		</ul>
 	</section>
 
 	<section class="slide">
-		Initially released in 1998
-		Version 2 published on 2012
+		<h2>SDL</h2>
+		<h3>Versions</h3>
+		
+		<ul>
+			<li>Initially released in 1998</li>
+			<li>Version 2 published on 2012</li>
+		</ul>
 	</section>
 
 	<section class="slide">
+		<h2>SDL</h2>
+		<h3>Layers</h3>
+
 		<img src="images/sdl-layers.png" />
 	</section>
 
 	<section class="slide">
- Amnesia
-Don’t Starve
-World of Goo
-Counter-Strike
-Half-Life
-Portal
-Team Fortress 2
-Fez
-Visual Boy Advance
-ZSNES
-Trine
-Psychonauts
+		<h2>SDL</h2>
+		<h3>Game titles</h3>
+
+		<ul>
+		<li>World of Goo</li>
+<li>Counter-Strike</li>
+<li>Half-Life</li>
+<li>Portal</li>
+<li>Team Fortress 2</li>
+<li>Fez</li>
+<li>Visual Boy Advance</li>
+<li>ZSNES</li>
+<li>Trine</li>
+		</ul>
 	</section>
 
 	<section class="slide">
 		<h2>Features</h2>
 
-		2D graphics
-		3D graphics (with OpenGL or DirectX)
-		Window management
-		Event handling
-		Image loading
-		Networking
-		Audio
-		Font rendering
-		Controller support
-		Text rendering
-		… and more
+		<ul>
+		<li>2D graphics</li>
+		<li>3D graphics (with OpenGL or DirectX)</li>
+		<li>Window management</li>
+		<li>Event handling</li>
+		<li>Image loading</li>
+		<li>Networking</li>
+		<li>Audio</li>
+		<li>Font rendering</li>
+		<li>Controller support</li>
+		<li>Text rendering</li>
+		<li>… and more</li>
+		</ul>
 	</section>
 
 	<section class="slide">
 		<h2>Modules</h2>
 
-		Core: video, event handling, audio, controllers
-		Others for: SDL_Image, SDL_Mixer, SDL_TTF, SDL_NET, SDL_GFX
+		<h3>Core: video, event handling, audio, controllers</h3>
+		<h3>Others: SDL_Image, SDL_Mixer, SDL_TTF, SDL_NET, SDL_GFX</h3>
 	</section>
 
 	<section class="slide">
@@ -98,13 +119,110 @@ Psychonauts
 	<section class="slide">
 		<h2>PHP SDL</h2>
 
+		<p>PHP extension that <u>mimics</u> the C library</p>
+		<p>Includes Image, Mixer, TTF and GFX modules</p>
 	</section>
 
 	<section class="slide">
 		<h2>Versions</h2>
 
+		<ul>
 		<li>0.9.3 - SDL v1</li>
 		<li>master - SDL v2 (WIP)</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Installing PHP SDL</h2>
+		
+		<ul>
+			<li>Using PECL</li>
+			<li>Compiling the source code</li>
+			<li>Using a vagrant VM</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Installing PHP SDL</h2>
+		<h3>Using PECL command</h3>
+	
+		<pre>
+		pecl install sdl-beta
+		</pre>
+		<p>Add extension=sdl.so to your php.ini</p>
+	</section>
+
+	<section class="slide">
+		<h2>Installing PHP SDL</h2>
+		<h3>Compiling the source code</h3>
+	
+		<pre>
+		git clone git@github.com:phpsdl/extension.git phpsdl-extension
+		cd phpsdl-extension
+		phpize
+		./configure
+		make
+		sudo make install
+		</pre>
+		<p>Add extension=sdl.so to your php.ini</p>
+	</section>
+
+	<section class="slide">
+		<h2>Installing PHP SDL</h2>
+		<h3>Using a vagrant VM</h3>
+
+		<pre>
+		git clone git@github.com:phpsdl/vagrant-machine.git phpsdl-vm
+		cd phpsdl-vm
+		vagrant up
+		</pre>
+		<p>Login with developer/developer</p>
+	</section>
+
+	<section class="slide">
+		<h2>SDL functions</h2>
+		<h3>Initializing</h3>
+
+		<pre>
+SDL_Init( SDL_INIT_VIDEO );
+</pre>
+	</section>
+	<section class="slide">
+		<h2>SDL functions</h2>
+		<h3>Creating a window</h3>
+
+<pre>
+$screen = SDL_SetVideoMode( WINDOW_WIDTH, WINDOW_HEIGHT, 0, SDL_HWSURFACE | SDL_DOUBLEBUF ); 
+</pre>
+	</section>
+	<section class="slide">
+		<h2>SDL functions</h2>
+		<h3>Painting</h3>
+
+<pre>
+$color = SDL_MapRGB($screen->format, $r, $g, $b);
+
+$dstrect = array( 'x' => 0, 'y' => 0, 'w' => 100, 'h' => 300 );
+SDL_FillRect($dst, $dstrect, $color)
+
+</pre>
+	</section>
+	<section class="slide">
+		<h2>SDL functions</h2>
+		<h3>Loading images</h3>
+
+<pre>
+$pic = SDL_LoadBMP(“poop.bmp”);
+</pre>
+	</section>
+	<section class="slide">
+		<h2>SDL functions</h2>
+		<h3>Displaying images on screen</h3>
+
+<pre>
+SDL_BlitSurface($src, $srcrect, $dst, $dstrect);
+SDL_FreeSurface($src);
+</pre>
 	</section>
 
 	<section class="slide">
